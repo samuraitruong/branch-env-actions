@@ -13,8 +13,8 @@ try {
   core.setOutput('env-name', branch);
   core.setOutput('env-name-lower', branch.toLocaleLowerCase());
 
-  const awsAccessKeyId = transform('aws_access_key_id');
-  const awsSecretAccessKey = transform('aws_secret_access_key');
+  let awsAccessKeyId = transform('aws_access_key_id');
+  let awsSecretAccessKey = transform('aws_secret_access_key');
   const awsAccessKeyIdName = 'aws-access-key-id';
   const awsSecretAccessKeyName = 'aws-secret-access-key';
 
@@ -23,25 +23,18 @@ try {
     core.setOutput(awsSecretAccessKeyName, awsSecretAccessKey);
     return;
   }
+
   if (mode === 'prefix') {
-    core.setOutput(
-      awsAccessKeyIdName,
-      transform(branch + '_' + awsSecretAccessKey),
-    );
-    core.setOutput(
-      awsSecretAccessKeyName,
-      transform(branch + '_' + awsSecretAccessKey),
-    );
+    awsSecretAccessKey = transform(branch + '_' + awsSecretAccessKey);
+    awsAccessKeyId = transform(branch + '_' + awsAccessKeyId);
   } else {
-    core.setOutput(
-      awsAccessKeyIdName,
-      transform(awsSecretAccessKey + '_' + branch),
-    );
-    core.setOutput(
-      awsSecretAccessKeyName,
-      transform(awsSecretAccessKey + '_' + branch),
-    );
+    awsSecretAccessKey = transform(awsSecretAccessKey + '_' + branch);
+    awsAccessKeyId = transform(awsAccessKeyId + '_' + branch);
   }
+  console.log(awsAccessKeyIdName, awsAccessKeyId);
+  console.log(awsSecretAccessKeyName, awsSecretAccessKey);
+  core.setOutput(awsAccessKeyIdName, awsAccessKeyId);
+  core.setOutput(awsSecretAccessKeyName, awsSecretAccessKey);
   // Get the JSON webhook payload for the event that triggered the workflow
   // const payload = JSON.stringify(github.context.payload, undefined, 2);
   // console.log(`The event payload: ${payload}`);
