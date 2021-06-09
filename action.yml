@@ -1,0 +1,30 @@
+name: 'Extract branch secrets'
+description: 'The sample github action that return secrets value match with branch prefix name'
+inputs:
+  branch-prefix:
+    description: 'The prefix of branch name'
+    required: false
+    default: 'release/'
+  mode:
+    description: 'The mode to append by prefix or posfix'
+    required: false
+    default: prefix
+  fallback:
+    description: use default name if branch is in fallback list
+    required: false
+  uppercase:
+    description: Return key as upper case
+    required: false
+    default: 'false'
+
+outputs:
+  env-name: # id of output
+    description: 'The name of environment'
+
+  aws-access-key-id:
+    description: 'The name of aws-access-key-id match with env branch name'
+  aws-secret-access-key:
+    description: 'The name of aws-secret-access-key match with env branch name'
+runs:
+  using: 'node12'
+  main: 'index.js'

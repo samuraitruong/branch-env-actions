@@ -1,0 +1,67 @@
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Fallback
+    steps:
+      - name: Run test action
+        id: test
+        uses: samuraitruong/branch-env-actions@v1.0
+        with:
+          fallback: main
+      - name: Print Output
+        run: |
+          echo "env-name = ${{ steps.test.outputs.env-name }}"
+          echo "aws-access-key-id = ${{ steps.test.outputs.aws-access-key-id }}"
+          echo "aws-secret-access-key = ${{ steps.test.outputs.aws-secret-access-key }}"
+  test1:
+    runs-on: ubuntu-latest
+    name: Branch - Prefix
+    if: github.ref == 'refs/heads/release/test'
+    steps:
+      - name: Run test action
+        id: test
+        uses: samuraitruong/branch-env-actions@v1.0
+        with:
+          fallback: main
+          branch-prefix: release/
+      - name: Print Output
+        run: |
+          echo "env-name = ${{ steps.test.outputs.env-name }}"
+          echo "aws-access-key-id = ${{ steps.test.outputs.aws-access-key-id }}"
+          echo "aws-secret-access-key = ${{ steps.test.outputs.aws-secret-access-key }}"
+  test2:
+    runs-on: ubuntu-latest
+    name: Branch - Posfix
+    if: github.ref == 'refs/heads/release/test'
+    steps:
+      - name: Run test action
+        id: test
+        uses: samuraitruong/branch-env-actions@v1.0
+        with:
+          fallback: main
+          mode: posfix
+          branch-prefix: release/
+      - name: Print Output
+        run: |
+          echo "env-name = ${{ steps.test.outputs.env-name }}"
+          echo "aws-access-key-id = ${{ steps.test.outputs.aws-access-key-id }}"
+          echo "aws-secret-access-key = ${{ steps.test.outputs.aws-secret-access-key }}"
+  test3:
+    runs-on: ubuntu-latest
+    name: Uppercase
+    if: github.ref == 'refs/heads/release/test'
+    steps:
+      - name: Run test action
+        id: test
+        uses: samuraitruong/branch-env-actions@v1.0
+        with:
+          uppercase: true
+          mode: posfix
+          branch-prefix: release/
+      - name: Print Output
+        run: |
+          echo "env-name = ${{ steps.test.outputs.env-name }}"
+          echo "aws-access-key-id = ${{ steps.test.outputs.aws-access-key-id }}"
+          echo "aws-secret-access-key = ${{ steps.test.outputs.aws-secret-access-key }}"
