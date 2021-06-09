@@ -28,6 +28,8 @@ true | false. if true the key will return as uppercase
 
 ### env-name
 
+### env-name-lower
+
 ### aws-access-key-id
 
 ### aws-secret-access-key

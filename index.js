@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const inputs = ['branch-prefix', 'mode', 'fallback', 'uppercase'];
 try {
-  const [branchName, mode, fallback = '', uppercase] = inputs.map((prop) =>
+  const [branchName = '', mode, fallback = '', uppercase] = inputs.map((prop) =>
     core.getInput(prop),
   );
   const transform = (s) => (uppercase === 'true' ? s.toUpperCase() : s);
@@ -11,6 +11,7 @@ try {
     .replace('refs/heads/', '')
     .replace(branchName, '');
   core.setOutput('env-name', branch);
+  core.setOutput('env-name-lower', branch.toLocaleLowerCase());
 
   const awsAccessKeyId = transform('aws_access_key_id');
   const awsSecretAccessKey = transform('aws_secret_access_key');
