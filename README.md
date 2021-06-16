@@ -65,5 +65,19 @@ with:
 
 ```
 
-
 ### Usage of dynamic var names
+
+```yml
+
+- name: Run test action
+        id: test
+        uses: samuraitruong/branch-env-actions@v1
+        with:
+          fallback: main
+          vars: var1,var2,var3
+- name: Print Output
+  run: |
+    echo var1 = ${{ steps.test.outputs.var1 }}
+    echo var2 = ${{ steps.test.outputs.var2 }}
+    echo var3 = ${{ steps.test.outputs.var3 }}
+```
