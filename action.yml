@@ -16,11 +16,16 @@ inputs:
     description: Return key as upper case
     required: false
     default: 'false'
+  vars:
+    description: list of variables name, multiple var support with comma separator
+    required: false
+    default: ''
 
 outputs:
   env-name: # id of output
     description: 'The name of environment'
-
+  env-name-lower: # id of output
+    description: 'rRturn environment name in lowecase'
   aws-access-key-id:
     description: 'The name of aws-access-key-id match with env branch name'
   aws-secret-access-key:
